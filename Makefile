@@ -8,7 +8,7 @@ LDFLAGS =
 CPPFILES = $(wildcard *.cpp)
 OFILES = $(CPPFILES:.cpp=.o)
 
-PROGRAM = queue
+PROGRAM = main
 ARGUMENTS = 
 
 hugo: clean depend run

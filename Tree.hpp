@@ -5,6 +5,9 @@
 #include "Node.hpp"
 
 class Tree {
+    private: 
+        void printRecursive(Node *n, int depth, std::ostream &os) const;
+        
     protected:
         Node *root; 
 
@@ -18,4 +21,6 @@ class Tree {
         virtual void Clear();
         virtual void DeleteElements();
         virtual void print(std::ostream &os) const; 
-}
+
+        friend std::ostream & operator << (std::ostream &os, const Tree &t);
+};

@@ -11,8 +11,10 @@ class Node {
         virtual Node* getFirstChild() const; 
         virtual Node* getNextSibling() const; 
 
-        virtual void setFirstChild(Node *o);
-        virtual void setNextSibling(Node *o);
+        virtual void setFirstChild(Node *n);
+        virtual void setNextSibling(Node *n);
 
         virtual void print(std::ostream &os) const = 0; 
+
+        // friend std::ostream & operator << (std::ostream &os, const Node &n);
 };
