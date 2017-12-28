@@ -1,0 +1,6 @@
+*.dSYM
+*.o
+main
+.DS_S*
+.vscode
+.depend
