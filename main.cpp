@@ -1,8 +1,12 @@
 #include <iostream>
 
-
 #include "StringNode.hpp"
 #include "Tree.hpp"
+
+#include "Directory.hpp"
+#include "File.hpp"
+
+#include "FileSystem.hpp"
 
 using namespace std; 
 
@@ -376,35 +380,113 @@ void testTreeAssignment() {
     t1assign = nullptr; 
 }
 
-int main() {
+void testFileDirectory() {
+    Directory *d = new Directory("root");
+    cout << "directory = " << *d << endl; 
 
+    File *f = new File("a.out");
+    cout << "file = " << *f << endl; 
+}
+
+void testFileSystem() {
+    FileSystem *fs = new FileSystem();
+
+    fs->mkdir("", "root");
+    fs->ls();
+    cout << endl; 
+    
+    fs->touch("root", "ReadMe.txt");
+    fs->ls();
+    cout << endl; 
+
+    fs->mkdir("root", "bin");
+    fs->ls();
+    cout << endl; 
+    
+    fs->touch("root/bin", "a.out");
+    fs->touch("root/bin", "b.out");
+    fs->ls();
+    cout << endl; 
+
+    fs->rm("root/bin", "a.out");
+    fs->ls();
+    cout << endl; 
+
+
+    fs->rmdir("", "root");
+    cout << endl; 
+
+    fs->rm("root/bin", "b.out");
+    fs->rmdir("", "root/bin");
+    fs->rm("root", "ReadMe.txt");
+    fs->rmdir("", "root");
+    fs->ls();
+    cout << endl; 
+
+    delete fs; 
+}
+
+int main() {
+    // part 1
     // testNodeCount(); 
     // testPrintTree();
     // testDeleteSubTree();
-    
-    // StringNode *sn = new StringNode("10");
-    // cout << "blupp"<< endl; 
-    // StringNode *sn1 = new StringNode(); 
-
-    // sn1 = sn; 
-
-    // cout << "sn = " << *sn << endl; 
-    // cout << "sn1 = " << *sn1 << endl; 
-
-    // cout << "sn = " << sn<< endl; 
-    // cout << "sn1 = " << sn1 << endl; 
-
-    // delete sn; 
-    // sn = nullptr; 
-
-    // cout << "sn1 = " << sn1 << endl; 
-    // cout << "sn1 = " << *sn1 << endl; 
 
     // testTreeCopyConstructor1();
     // testTreeCopyConstructor2();
     // testTreeCopyConstructor6();
 
-    testTreeAssignment();
+    // testTreeAssignment();
+
+
+    // part 2
+    // testFileDirectory(); 
+    
+    // testFileSystem();    
+
+    FileSystem *fs = new FileSystem();
+
+    fs->touch("root/bin", "b.out");
+    cout << endl; 
+    
+    fs->touch("root", "b.out");
+    cout << endl; 
+    
+    fs->touch("root/bin/hallo", "b.out");
+    cout << endl; 
+
+    fs->touch("/root/bin", "b.out");
+    cout << endl; 
+    
+    fs->touch("/root", "b.out");
+    cout << endl; 
+    
+    fs->touch("/root/bin/hallo", "b.out");
+    cout << endl; 
+
+    
+    delete fs; 
 
     return 0;     
 }
+
+
+// void main () {
+//     Tree *t1 = new Tree(); 
+//     StringNode *node10 = new StringNode("10");
+//     StringNode *node11 = new StringNode("11");
+//     StringNode *node12 = new StringNode("12");
+
+//     t1->insertChild(nullptr, node10);
+//     t1->insertChild(node10, node11);
+//     t1->insertChild(node10, node12);
+
+//     t1->clear();
+
+//     t1->insertChild(node12, node11);
+//     t1->insertChild(node11, node1);
+
+//     t1->DeleteELements();
+
+//     delete t1; 
+// }
