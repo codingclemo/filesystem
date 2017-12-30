@@ -29,8 +29,8 @@ void Node::setNextSibling(Node *n) {
     nextSibling = n; 
 }
 
-// std::ostream & operator << (std::ostream &os, const Node &n) {
-//     cout << "<< operator for Node called" << endl; 
-//     n.print(os);
-//     return os; 
-// }
+std::ostream & operator << (std::ostream &os, const Node &n) {
+    // cout << "<< operator for Node called" << endl; 
+    n.print(os);
+    return os; 
+}

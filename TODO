@@ -1,0 +1,1 @@
+-) replace .print with << operator if it works for nodes!

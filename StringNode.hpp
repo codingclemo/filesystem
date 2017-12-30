@@ -14,5 +14,5 @@ class StringNode : public Node {
 
         virtual void print(std::ostream &os) const; 
 
-        // friend std::ostream & operator << (std::ostream &os, const StringNode &sn);
+        friend std::ostream & operator << (std::ostream &os, const StringNode &sn);
 };

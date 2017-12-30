@@ -4,7 +4,7 @@
 
 using namespace std; 
 
-StringNode::StringNode(std::string value) : value(value), Node() {
+StringNode::StringNode(std::string value) : Node(), value(value) {
     cout << "\t\t\t\tConstructor StringNode(" << value << ") called." << endl; 
 
 }
@@ -17,8 +17,8 @@ void StringNode::print(std::ostream &os) const {
     os << value;
 }
 
-// std::ostream & operator << (std::ostream &os, const StringNode &sn) {
-//     cout << " << operator for StringNode called "  << endl; 
-//     sn.print(os);
-//     return os; 
-// }
+std::ostream & operator << (std::ostream &os, const StringNode &sn) {
+    cout << " << operator for StringNode called "  << endl; 
+    sn.print(os);
+    return os; 
+}
