@@ -5,11 +5,15 @@
 using namespace std; 
 
 StringNode::StringNode(std::string value) : Node(), value(value) {
-    cout << "\t\t\t\tConstructor StringNode(" << value << ") called." << endl; 
-
+    cout << "\t\t\t\tConstructor StringNode(" << value << ") called." << " address of this = " << this << endl; 
 }
+
+StringNode::StringNode(const StringNode &sn) : value(sn.value) {
+    cout << "\t\t\t\tCopy Constructor StringNode(" << sn.value << ") called."  << " address of this = " << this << endl; 
+}
+
 StringNode::~StringNode() {
-    cout << "\t\t\t\tDestructor StringNode(" << value << ") called." << endl; 
+    cout << "\t\t\t\tDestructor ~StringNode(" << value << ") called."  << " address of this = " << this << endl; 
 }
 
 void StringNode::print(std::ostream &os) const {
@@ -18,7 +22,11 @@ void StringNode::print(std::ostream &os) const {
 }
 
 std::ostream & operator << (std::ostream &os, const StringNode &sn) {
-    cout << " << operator for StringNode called "  << endl; 
+    // cout << " << operator for StringNode called "  << endl; 
     sn.print(os);
     return os; 
 }
+
+Node* StringNode::clone() const {
+    return new StringNode(*this);
+} 

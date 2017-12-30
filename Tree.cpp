@@ -9,6 +9,42 @@ Tree::Tree() : cntNodes(0), root(nullptr) {
     cout << "\t\t\t\tConstructor Tree() called" << endl; 
 } 
 
+void Tree::traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *parent) {
+    Node *oldSibling, *newSibling;
+    Node *oldChild, *newChild; 
+
+    newSibling = nullptr; 
+    newChild = nullptr; 
+
+    oldChild = &oldTree; 
+    while (oldChild != nullptr) {
+        newChild = oldChild->clone();
+        newTree.insertChild(parent, newChild);
+
+        oldSibling = oldChild;
+        oldSibling = oldSibling->getNextSibling();
+        while (oldSibling != nullptr) {
+            if (oldSibling->getFirstChild() != nullptr) {
+                traverseRecursiveAndInsert(newTree, oldTree, newChild);
+            }
+            newSibling = oldSibling->clone();
+            newTree.insertChild(newChild, newSibling);
+
+            oldSibling = oldSibling->getNextSibling();
+        }
+        parent = newChild; 
+        oldChild = oldChild->getFirstChild(); 
+    }
+}
+
+// cntNodes is adapted by calling "insertChild" in traverseRecursiveAndInsert
+Tree::Tree(const Tree &t) : cntNodes(0), root(nullptr) {
+    cout << "\t\t\t\tCopyConstructor Tree() called!" <<  " with cntNodes = " << cntNodes << endl; 
+    traverseRecursiveAndInsert(*this, *(t.getRoot()), nullptr);
+
+    assert(t.cntNodes == this->cntNodes);
+}
+
 Tree::~Tree() {
     cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
 }
