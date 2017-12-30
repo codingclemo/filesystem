@@ -443,7 +443,6 @@ void testFileSystemFinal() {
     cout << "testFileSystemFinal" << endl; 
     cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" << endl; 
 
-
     FileSystem *fs = new FileSystem();
     fs->ls();
     cout << endl; 
@@ -489,6 +488,7 @@ void testFileSystemFinal() {
     fs->ls();
     cout << endl; 
 
+    // call to DeleteElements not necessary, because every node was deleted with rm/rmdir
     // fs->DeleteElements();
     delete fs; 
 }
