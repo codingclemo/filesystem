@@ -61,34 +61,34 @@ FSNode* FileSystem::findNode(const string &path) const {
         subdirs.erase(subdirs.begin());
 
         string dummy = root_as_fsnode->getName(); 
-        cout << "dummy = " << dummy << endl; 
+        cout << "\t\t\t\t\tdummy = " << dummy << endl; 
         if (root_as_fsnode->getName() != currentDir) {
-        //     showErrorMessage("?", "path not found in filesystem!", fullDir);
+            showErrorMessage("?", "path not found in filesystem!", fullDir);
         }
 
-        // cout << "subdir = " << currentDir << endl; 
-    //     while (!subdirs.empty()) {
-    //         currentDir = subdirs[0];
-    //         fullDir += "/" + currentDir;
-    //         // cout << "subdir = " << currentDir << endl; 
-    //         subdirs.erase(subdirs.begin());
+        cout << "\t\t\t\t\tsubdir = " << currentDir << endl; 
+        while (!subdirs.empty()) {
+            currentDir = subdirs[0];
+            fullDir += "/" + currentDir;
+            // cout << "\t\t\t\t\tsubdir = " << currentDir << endl; 
+            subdirs.erase(subdirs.begin());
 
-    //         // look up the currentNode 
-    //         tmp = dynamic_cast<FSNode*>(currentNode->getFirstChild());
-    //         if (tmp->getName() == currentDir) {
-    //             currentNode = tmp; 
-    //         } else {
-    //             // is the subDir one of the siblings?
-    //             tmp = dynamic_cast<FSNode*>(currentNode->getNextSibling()); 
-    //             while ((tmp != nullptr) && (tmp->getName() != currentDir)) {
-    //                 tmp = dynamic_cast<FSNode*>(tmp->getNextSibling());
-    //             }
-    //             if (tmp == nullptr) {
-    //                 showErrorMessage("?", "path not found in filesystem!", fullDir);
-    //             }
-    //             currentNode = tmp; 
-    //         }
-    //     }
+            // look up the currentNode 
+            tmp = dynamic_cast<FSNode*>(currentNode->getFirstChild());
+            if (tmp->getName() == currentDir) {
+                currentNode = tmp; 
+            } else {
+                // is the subDir one of the siblings?
+                tmp = dynamic_cast<FSNode*>(currentNode->getNextSibling()); 
+                while ((tmp != nullptr) && (tmp->getName() != currentDir)) {
+                    tmp = dynamic_cast<FSNode*>(tmp->getNextSibling());
+                }
+                if (tmp == nullptr) {
+                    showErrorMessage("?", "path not found in filesystem!", fullDir);
+                }
+                currentNode = tmp; 
+            }
+        }
     } else {
         return nullptr; 
     }
@@ -109,7 +109,7 @@ void FileSystem::touch(const string &path, const string &filename) {
     if (n == nullptr) {
         showErrorMessage("touch", "FileSystem is empty!", path);
     } else {
-        cout << "touch node found for path = " << path << " has contents n = " << n << endl; 
+        cout << "touch node found for path = " << path << " has contents n = " << *n << endl; 
     }
 }
 
@@ -119,6 +119,13 @@ void FileSystem::mkdir(const string &path, const string &dirname) {
         insertChild(root, new Directory(dirname));
      } else {
          cout << "\t\t\t\t\tNOT IMPLEMENTED" << endl; 
+         FSNode *n = findNode(path);
+         if (n == nullptr) {
+            showErrorMessage("mkdir", "Path not found!", path);
+        } else {
+            cout << "'mkdir'  node found for path = " << path << " has contents n = " << *n << endl; 
+            insertChild(n, new Directory(dirname));
+        }
      }
 }
 

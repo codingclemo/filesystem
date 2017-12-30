@@ -30,5 +30,5 @@ std::ostream & operator << (std::ostream &os, const FSNode &sn) {
 // } 
 
 std::string FSNode::getName() const {
-    return "hallo"; 
+    return name; 
 }

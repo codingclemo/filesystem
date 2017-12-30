@@ -446,11 +446,15 @@ int main() {
 
     FileSystem *fs = new FileSystem();
     fs->mkdir("", "root");
+    fs->mkdir("root", "bin");
+    fs->mkdir("root", "etc");
+    fs->mkdir("root", "home");
+    fs->mkdir("root", "usr");
+    fs->mkdir("root", "var");
     fs->ls(); 
-    fs->mkdir("root", "blupp");
-    fs->mkdir("root", "blabla");
-    fs->ls(); 
-    // fs->touch("root1/bin1", "b.out");
+
+    // fs->touch("root/bin", "a.out");
+    
     // cout << endl; 
     
     // fs->touch("root2", "b.out");
@@ -471,7 +475,7 @@ int main() {
     // fs->touch("/root6/bin6/hallo6/", "b.out");
     // cout << endl; 
 
-    
+    fs->DeleteElements();
     delete fs; 
 
     return 0;     
