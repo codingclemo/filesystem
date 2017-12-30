@@ -285,6 +285,48 @@ void testTreeCopyConstructor2() {
     t1copy = nullptr; 
 }
 
+void testTreeCopyConstructor6() {
+    // 1 Node
+    Tree *t1 = new Tree(); 
+    StringNode *node10 = new StringNode("10");
+    StringNode *node11 = new StringNode("11");
+    StringNode *node12 = new StringNode("12");
+    StringNode *node13 = new StringNode("13");
+    StringNode *node14 = new StringNode("14");
+    StringNode *node15 = new StringNode("15");
+    
+    t1->insertChild(nullptr, node10);
+    t1->insertChild(node10, node11);
+    t1->insertChild(node10, node12);
+    t1->insertChild(node11, node13);
+    t1->insertChild(node11, node14);
+    t1->insertChild(node12, node15);
+    
+    cout << "----------- testTreeCopyConstructor6   with 6 Nodes -----------  "<< endl;  
+    cout << "Tree t1 with 6 nodes  .... "<< endl << *t1 << endl << endl;  
+
+    Tree* t1copy = new Tree(*t1);
+
+    cout << "Tree t1copy .... "<< endl << *t1copy << endl << endl;  
+
+    t1->DeleteElements();
+    cout << "Tree t1 after calling t1->deleteElements()  : .... "<< endl << *t1 << endl;
+    cout << "Tree t1copy after calling t1->deleteElements()  : .... "<< endl << *t1copy << endl;
+    
+    t1copy->DeleteElements();
+    cout << "Tree t1 after calling t1copy->deleteElements()  : .... "<< endl << *t1 << endl;
+    cout << "Tree t1copy after calling t1copy->deleteElements()  : .... "<< endl << *t1copy << endl << endl<< endl<< endl;
+
+    cout << endl <<endl<< endl << "calling delete  t1 "<< endl;
+    delete t1;
+    cout <<  "calling delete  t1copy "<< endl;
+    delete t1copy;
+
+    t1 = nullptr; 
+    t1copy = nullptr; 
+}
+
+
 int main() {
 
     // testNodeCount(); 
@@ -313,6 +355,7 @@ int main() {
 
     // testTreeCopyConstructor1();
     testTreeCopyConstructor2();
+    testTreeCopyConstructor5();
 
     return 0;     
 }

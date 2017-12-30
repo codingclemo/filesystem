@@ -180,6 +180,18 @@ void Tree::print(std::ostream &os) const {
     // root->print(os);
 }
 
+Tree& Tree::operator = (const Tree &t) {
+    cout << "\t\t\t\tAssignment Operator Tree = called!" <<  " with cntNodes = " << cntNodes << endl; 
+    if (this = &t) return *this;
+    
+    // delete the existing tree
+    deleteElements(root);
+    traverseRecursiveAndInsert(*this, *(t.getRoot()), nullptr);
+
+    assert(t.cntNodes == this->cntNodes);
+    return *this; 
+} 
+
 std::ostream & operator << (std::ostream &os, const Tree &t) {
     // t.print(os);
     // os << "<< operator for tree called " << endl << flush; 
