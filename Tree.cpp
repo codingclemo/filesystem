@@ -158,26 +158,23 @@ void Tree::DeleteElements() {
 
 void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
     Node *sibling;
-    Node *child; 
-    child = &n; 
-    //os << "first: " << *child <<endl;
-    while (child != nullptr) {
-        // os << "depth: " << depth << std::string(depth * 2, ' ');
-        sibling = child;
+    sibling = &n; 
+
+    if (sibling != nullptr) {
         os << std::string(depth * 2, ' ') << *sibling <<endl;
-        // sibling->print(os);
-        sibling = sibling->getNextSibling();
-        depth++;
+        if (sibling->getFirstChild() != nullptr) {
+            printRecursive(*(sibling->getFirstChild()), depth+1, os);
+            // printRecursive(*(sibling->getNextSibling()), depth+1, os);
+        } 
         while (sibling != nullptr) {
-            // sibling->print(os);
-            if (sibling->getFirstChild() != nullptr) {
-                printRecursive(*(sibling->getFirstChild()), depth, os);
-            }
-            os << std::string((depth+1) * 2, ' ') << *sibling << endl;
             sibling = sibling->getNextSibling();
+            if (sibling != nullptr) {
+                os << std::string(depth * 2, ' ') << *sibling <<endl;
+                if (sibling->getFirstChild() != nullptr) {
+                    printRecursive(*(sibling->getFirstChild()), depth+1, os);                   
+                } 
+            }
         }
-        child = child->getFirstChild(); 
-        depth += 1; 
     }
 }
 

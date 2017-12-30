@@ -133,8 +133,8 @@ void testPrintTree() {
     t->insertChild(node4, node13);   
     t->insertChild(node4, node14);
     
-    cout << "Tree  : .... "<< endl << *t << endl << endl;  
-
+    cout << "Tree  : .... "<< endl << *t;  
+    cout << "---------"<<endl; 
     delete node14;
     delete node13;
     delete node12; 
@@ -494,7 +494,7 @@ int main() {
     // delete fs; 
 
     // cout << endl << endl << endl << endl << endl << endl;
-    // testFileSystem();   
+    testFileSystem();   
     
     return 0;     
 }
