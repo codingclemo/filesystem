@@ -52,7 +52,7 @@ Tree::Tree(const Tree &t) : root(nullptr), cntNodes(0) {
 }
 
 Tree::~Tree() {
-    // cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
+    cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
 }
 
 Node* Tree::getRoot() const {

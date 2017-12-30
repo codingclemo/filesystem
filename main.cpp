@@ -438,62 +438,62 @@ void testFileSystem() {
 
 int main() {
     // part 1
-    // testNodeCount(); 
+    testNodeCount(); 
     testPrintTree();
-    // testDeleteSubTree();
+    testDeleteSubTree();
 
-    // testTreeCopyConstructor1();
-    // testTreeCopyConstructor2();
-    // testTreeCopyConstructor6();
+    testTreeCopyConstructor1();
+    testTreeCopyConstructor2();
+    testTreeCopyConstructor6();
 
-    // testTreeAssignment();
+    testTreeAssignment();
 
 
     // part 2
-    // testFileDirectory(); 
+    testFileDirectory(); 
     
     //  
 
-    // FileSystem *fs = new FileSystem();
-    // fs->mkdir("", "root");
-    // fs->mkdir("root", "bin");
-    // 
-    // fs->touch("root/bin", "a.out");
-    // fs->touch("root/bin", "b.out");
-    // fs->ls();
+    FileSystem *fs = new FileSystem();
+    fs->mkdir("", "root");
+    fs->mkdir("root", "bin");
+    
+    fs->touch("root/bin", "a.out");
+    fs->touch("root/bin", "b.out");
+    fs->ls();
     cout << endl; 
     // 
-    // fs->rm("root/bin", "a.out");
-    // fs->ls();
-    // cout << endl; 
+    fs->rm("root/bin", "a.out");
+    fs->ls();
+    cout << endl; 
 
 
-    // cout << endl <<endl<< endl << endl; 
-    //  
-    // fs->rmdir("", "/root/usr");
-    // fs->ls();
-    // cout << endl; 
-    // 
-    // cout << "callinh touch" << endl; 
-    // fs->touch("roo3t/bin3/hallo3", "b.out");
-    // cout << endl; 
+    cout << endl <<endl<< endl << endl; 
+     
+    fs->rmdir("", "/root/usr");
+    fs->ls();
+    cout << endl; 
+    
+    cout << "callinh touch" << endl; 
+    fs->touch("roo3t/bin3/hallo3", "b.out");
+    cout << endl; 
 
-    // fs->touch("/root4/bin4", "b.out");
-    // cout << endl; 
-    // 
-    // fs->touch("/root5", "b.out");
-    // cout << endl; 
-    // 
-    // fs->touch("/root5/bin5/hallo5", "b.out");
-    // cout << endl; 
+    fs->touch("/root4/bin4", "b.out");
+    cout << endl; 
+    
+    fs->touch("/root5", "b.out");
+    cout << endl; 
+    
+    fs->touch("/root5/bin5/hallo5", "b.out");
+    cout << endl; 
 
-    // fs->touch("/root6/bin6/hallo6/", "b.out");
-    // cout << endl; 
+    fs->touch("/root6/bin6/hallo6/", "b.out");
+    cout << endl; 
 
-    // fs->DeleteElements();
-    // delete fs; 
+    fs->DeleteElements();
+    delete fs; 
 
-    // cout << endl << endl << endl << endl << endl << endl;
+    cout << endl << endl << endl << endl << endl << endl;
     testFileSystem();   
     
     return 0;     
