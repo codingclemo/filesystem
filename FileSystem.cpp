@@ -107,24 +107,43 @@ void FileSystem::showErrorMessage(const string &method, const string &msg, const
     cout << "**************************************************" <<endl;
 }
 
-bool FileSystem::removeNode(FSNode *n, const std::string &name) {
-    FSNode *prev; 
-    prev = n; 
+bool FileSystem::removeNode(FSNode *parent, const std::string &name) {
+    FSNode *prev, *n; 
+    Node *deleteMe; 
+    
+    FSNode *parent_first_child_as_fsnode = dynamic_cast<FSNode*> (parent->getFirstChild());
+    // is the node the "firstChild" ? -> adjust all relevant pointers
+    if (parent_first_child_as_fsnode->getName() == name) {
+        // that's the node we want to delete 
+        deleteMe = parent->getFirstChild();
+        // the new firstChild of parent
+        n = dynamic_cast<FSNode*> (deleteMe->getNextSibling());
+        n->setFirstChild(deleteMe->getFirstChild());
 
-    while ((n != nullptr) && (n->getName() != name)) {
-        prev = n;
-        n = dynamic_cast<FSNode*> (n->getNextSibling());
-    }
+        // set as new child from parent
+        parent->setFirstChild(n);
 
-    if (n == nullptr) {
-        cout << "removeNode - node not found" <<endl; 
-        return false;
+        deleteMe->setNextSibling(nullptr);
+        deleteMe->setFirstChild(nullptr);
+        delete deleteMe;
+        deleteMe = nullptr; 
+        cntNodes--;
+    } else {
+        n = parent_first_child_as_fsnode; 
+        prev = n; 
+        while ((n != nullptr) && (n->getName() != name)) {
+            prev = n;
+            n = dynamic_cast<FSNode*> (n->getNextSibling());
+        }
+        if (n == nullptr) {
+            cout << "removeNode - node not found" <<endl; 
+            return false;
+        } 
+        // delete the node
+        prev->setNextSibling(n->getNextSibling());
+        delete n;
+        cntNodes--;
     } 
-    // delete the node
-
-    prev->setNextSibling(n->getNextSibling());
-    delete n;
-    cntNodes--; 
     return true; 
 }
 
@@ -178,11 +197,12 @@ void FileSystem::mkdir(const string &path, const string &dirname) {
 
 void FileSystem::rm(const string &path, const string &filename) {
     FSNode *n = findNode(path);
+    cout << "'rm'  n = " << *n << endl; 
     if (n == nullptr) {
         showErrorMessage("rm", "Path not found!", path);
     } else {
         cout << "'rm'  node found for path = " << path << " has contents n = " << *n << endl; 
-        if (!removeNode(dynamic_cast<FSNode*> (n->getFirstChild()), filename)) {
+        if (!removeNode(dynamic_cast<FSNode*> (n), filename)) {
             showErrorMessage("rm", "File not found!", path + "/" + filename);
         }
     }
@@ -205,11 +225,13 @@ void FileSystem::rmdir(const string &path, const string &dirname) {
 
         if ((n->getFirstChild() != nullptr)) {
             showErrorMessage("rmdir", "Can't 'rmdir' directory, because it is not empty!", dirname);
+        } else {
+            cout << "\t\t\t\t\t\trmdir  - removing node" <<endl;
+            if (!removeNode(dynamic_cast<FSNode*> (parent), name)) {
+                showErrorMessage("rmdir", "Directory not found!", dirname);
+            }
         }
-        cout << "\t\t\t\t\t\trmdir  - removing node" <<endl;
-        if (!removeNode(dynamic_cast<FSNode*> (parent->getFirstChild()), name)) {
-            showErrorMessage("rmdir", "Directory not found!", dirname);
-        }
+        
     }
 }
 

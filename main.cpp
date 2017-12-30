@@ -412,17 +412,18 @@ void testFileSystem() {
     fs->ls();
     cout << endl; 
 
-
     fs->rmdir("", "root");
-    cout << endl; 
+    cout << endl <<endl<< endl <<endl<< endl <<endl; 
 
     fs->rm("root/bin", "b.out");
-    fs->rmdir("", "root/bin");
-    fs->rm("root", "ReadMe.txt");
-    fs->rmdir("", "root");
-    fs->ls();
-    cout << endl; 
 
+    // fs->rmdir("", "root/bin");
+    // fs->rm("root", "ReadMe.txt");
+    // fs->rmdir("", "root");
+    // fs->ls();
+    // cout << endl; 
+
+    fs->DeleteElements();
     delete fs; 
 }
 
@@ -440,35 +441,29 @@ int main() {
 
 
     // part 2
-    testFileDirectory(); 
+    // testFileDirectory(); 
     
     //  
 
-    FileSystem *fs = new FileSystem();
-    fs->mkdir("", "root");
-    fs->mkdir("root", "bin");
-    fs->mkdir("root", "etc");
-    fs->mkdir("root", "home");
-    fs->mkdir("root", "usr");
-    fs->mkdir("root", "var");
-    fs->ls(); 
-
-    fs->touch("root/bin", "a.out");
-    fs->touch("root/bin", "b.out");
-    fs->touch("root/bin", "c.out");
-    fs->ls();
-    cout << endl; 
+    // FileSystem *fs = new FileSystem();
+    // fs->mkdir("", "root");
+    // fs->mkdir("root", "bin");
     
-    fs->rm("root/bin", "b.out");
-    fs->ls();
-    cout << endl; 
+    // fs->touch("root/bin", "a.out");
+    // fs->touch("root/bin", "b.out");
+    // fs->ls();
+    // // cout << endl; 
+    
+    // fs->rm("root/bin", "a.out");
+    // fs->ls();
+    // cout << endl; 
 
 
-    cout << endl <<endl<< endl << endl; 
+    // cout << endl <<endl<< endl << endl; 
      
-    fs->rmdir("", "/root/usr");
-    fs->ls();
-    cout << endl; 
+    // fs->rmdir("", "/root/usr");
+    // fs->ls();
+    // cout << endl; 
     
     // fs->touch("roo3t/bin3/hallo3", "b.out");
     // cout << endl; 
@@ -485,10 +480,10 @@ int main() {
     // fs->touch("/root6/bin6/hallo6/", "b.out");
     // cout << endl; 
 
-    fs->DeleteElements();
-    delete fs; 
+    // fs->DeleteElements();
+    // delete fs; 
 
-    cout << endl << endl << endl << endl << endl << endl;
+    // cout << endl << endl << endl << endl << endl << endl;
     testFileSystem();   
     
     return 0;     

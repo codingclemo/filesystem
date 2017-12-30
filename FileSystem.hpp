@@ -16,7 +16,7 @@ class FileSystem : public Tree {
 
         void showErrorMessage(const std::string &method, const std::string &msg, const std::string &path) const;
 
-        bool removeNode(FSNode *n, const std::string &name);
+        bool removeNode(FSNode *parent, const std::string &name);
 
         void splitDirname(const std::string &path, std::string &parentDir, std::string &dirname) const;
 
