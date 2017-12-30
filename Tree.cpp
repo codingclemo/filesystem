@@ -6,7 +6,7 @@
 using namespace std; 
 
 Tree::Tree() : root(nullptr), cntNodes(0) {
-    cout << "\t\t\t\tConstructor Tree() called" << endl; 
+    // cout << "\t\t\t\tConstructor Tree() called" << endl; 
 } 
 
 void Tree::traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *newParent) {
@@ -44,7 +44,7 @@ void Tree::traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *newPar
 
 // cntNodes is adapted by calling "insertChild" in traverseRecursiveAndInsert
 Tree::Tree(const Tree &t) : root(nullptr), cntNodes(0) {
-    cout << "\t\t\t\tCopyConstructor Tree() called!" << endl; 
+    // cout << "\t\t\t\tCopyConstructor Tree() called!" << endl; 
     traverseRecursiveAndInsert(*this, *(t.getRoot()), nullptr);
 
     // cout << "\t\t\t\tcopy constructed tree root = " << root << endl;
@@ -52,7 +52,7 @@ Tree::Tree(const Tree &t) : root(nullptr), cntNodes(0) {
 }
 
 Tree::~Tree() {
-    cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
+    // cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
 }
 
 Node* Tree::getRoot() const {
@@ -167,18 +167,17 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
         os << std::string(depth * 2, ' ') << *sibling <<endl;
         // sibling->print(os);
         sibling = sibling->getNextSibling();
+        depth++;
         while (sibling != nullptr) {
-            os << std::string((depth+1) * 2, ' ') << *sibling << endl;
             // sibling->print(os);
             if (sibling->getFirstChild() != nullptr) {
-                os << endl; 
-                printRecursive(*(sibling->getFirstChild()), depth+2, os);
+                printRecursive(*(sibling->getFirstChild()), depth, os);
             }
+            os << std::string((depth+1) * 2, ' ') << *sibling << endl;
             sibling = sibling->getNextSibling();
         }
-        os << endl; 
         child = child->getFirstChild(); 
-        depth += 0; 
+        depth += 1; 
     }
 }
 

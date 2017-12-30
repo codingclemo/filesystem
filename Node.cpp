@@ -6,11 +6,11 @@ using namespace std;
 
 Node::Node(Node *firstChild, Node *nextSibling) :
     firstChild(firstChild), nextSibling(nextSibling) {
-    cout << "\t\t\t\tconstructor Node called " << endl; 
+    // cout << "\t\t\t\tconstructor Node called " << endl; 
 }
 
 Node::~Node() {
-    cout << "\t\t\t\tDestructor ~Node called" << endl; 
+    // cout << "\t\t\t\tDestructor ~Node called" << endl; 
 } 
         
 Node* Node::getFirstChild() const {

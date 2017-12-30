@@ -5,11 +5,11 @@
 using namespace std; 
 
 File::File(std::string name, std::string contents) : FSNode(name), contents(contents) {
-    cout << "\t\t\t\tConstructor File(" << name << ") called." << " address of this = " << this << endl; 
+    // cout << "\t\t\t\tConstructor File(" << name << ") called." << " address of this = " << this << endl; 
 }
 
 File::~File() {
-    cout << "\t\t\t\tDestructor ~File(" <<  name  << ") called."  << " address of this = " << this << endl; 
+    // cout << "\t\t\t\tDestructor ~File(" <<  name  << ") called."  << " address of this = " << this << endl; 
 }
 
 void File::print(std::ostream &os) const {
