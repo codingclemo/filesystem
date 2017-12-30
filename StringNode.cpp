@@ -8,8 +8,10 @@ StringNode::StringNode(std::string value) : Node(), value(value) {
     cout << "\t\t\t\tConstructor StringNode(" << value << ") called." << " address of this = " << this << endl; 
 }
 
-StringNode::StringNode(const StringNode &sn) : value(sn.value) {
+StringNode::StringNode(const StringNode &sn) : Node(), value(sn.value) {
     cout << "\t\t\t\tCopy Constructor StringNode(" << sn.value << ") called."  << " address of this = " << this << endl; 
+    // cout << "\t\t\t\t\tcopy conctructed node ... node.getNextSibling() " << this->getNextSibling() << endl; 
+    // cout << "\t\t\t\t\tcopy conctructed node ... node.getFirstChild() " << this->getFirstChild() << endl; 
 }
 
 StringNode::~StringNode() {

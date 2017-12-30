@@ -9,39 +9,45 @@ Tree::Tree() : cntNodes(0), root(nullptr) {
     cout << "\t\t\t\tConstructor Tree() called" << endl; 
 } 
 
-void Tree::traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *parent) {
+void Tree::traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *newParent) {
     Node *oldSibling, *newSibling;
     Node *oldChild, *newChild; 
 
     newSibling = nullptr; 
     newChild = nullptr; 
 
-    oldChild = &oldTree; 
+    oldChild = &oldTree;
     while (oldChild != nullptr) {
+        cout << " in outer while" << endl;
         newChild = oldChild->clone();
-        newTree.insertChild(parent, newChild);
-
+        newTree.insertChild(newParent, newChild);
+        
         oldSibling = oldChild;
         oldSibling = oldSibling->getNextSibling();
-        while (oldSibling != nullptr) {
-            if (oldSibling->getFirstChild() != nullptr) {
-                traverseRecursiveAndInsert(newTree, oldTree, newChild);
-            }
-            newSibling = oldSibling->clone();
-            newTree.insertChild(newChild, newSibling);
 
+        while (oldSibling != nullptr) {
+            cout << " in inner while" << endl; 
+            newSibling = oldSibling->clone();
+            newTree.insertChild(newParent, newSibling);
+            
+            if (oldSibling->getFirstChild() != nullptr) {
+                cout << endl << endl << "rec call to 'traverseRecursiveAndInsert'" << endl;
+                traverseRecursiveAndInsert(newTree, *(oldSibling->getFirstChild()), newSibling);
+            }
             oldSibling = oldSibling->getNextSibling();
         }
-        parent = newChild; 
+        cout << " after  inner while" << endl; 
+        newParent = newChild; 
         oldChild = oldChild->getFirstChild(); 
     }
 }
 
 // cntNodes is adapted by calling "insertChild" in traverseRecursiveAndInsert
 Tree::Tree(const Tree &t) : cntNodes(0), root(nullptr) {
-    cout << "\t\t\t\tCopyConstructor Tree() called!" <<  " with cntNodes = " << cntNodes << endl; 
+    cout << "\t\t\t\tCopyConstructor Tree() called!" << endl; 
     traverseRecursiveAndInsert(*this, *(t.getRoot()), nullptr);
 
+    cout << "\t\t\t\tcopy constructed tree root = " << root << endl;
     assert(t.cntNodes == this->cntNodes);
 }
 
@@ -56,23 +62,23 @@ Node* Tree::getRoot() const {
 void Tree::insertChild(Node *parent, Node *child) {
     cntNodes++;
     if (parent == nullptr) {
-        // cout << "'Tree::insertChild'   inserting child as new root" << endl; 
+        cout << "'\t\t\t\tTree::insertChild'   inserting child as new root" << endl; 
         root = child;
     } else if (parent->getFirstChild() == nullptr) {
         // add child as firstChild
-        // cout << "\t\t\t\t'Tree::insertChild'   inserting child as 'firstChild'" << endl; 
-        // cout << "parent.value = " << *parent << "   child.value = " << *child << endl;     
+        cout << "\t\t\t\t'Tree::insertChild'   inserting child as 'firstChild'" << endl; 
+        cout << "\t\t\t\tparent.value = " << *parent << "   child.value = " << *child << endl;     
         parent->setFirstChild(child);
     } else {
         // find last node in list 
-        // cout << "\t\t\t\t'Tree::insertChild'   inserting child at end of list of nextSiblings()" << endl; 
+        cout << "\t\t\t\t'Tree::insertChild'   inserting child at end of list of nextSiblings()" << endl; 
         Node* sibling = parent->getFirstChild(); 
-        // cout << "sibling.value = " << *sibling << endl;     
+        cout << "\t\t\t\tsibling.value = " << *sibling << endl;     
         while (sibling->getNextSibling() != nullptr) {
             sibling = sibling->getNextSibling();
         }
         // append child node
-        // cout << "adding child to sibling.value = "<< *sibling<< "    child.value = "<< *child << endl; 
+        cout << "\t\t\t\tadding child to sibling.value = "<< *sibling<< "    child.value = "<< *child << endl; 
         sibling->setNextSibling(child);
     } 
     cout << "\t\t\t\'insertChild'  called   cntNodes = " << cntNodes << endl; 
@@ -100,7 +106,7 @@ void Tree::deleteSubTree(Node *node) {
         cntNodes--;
         while (sibling != nullptr) {
             if (sibling->getFirstChild() != nullptr) {
-                deleteSubTree(sibling->getFirstChild());
+                deleteSubTree(sibling);
             }
             deleteMe = sibling; 
             sibling = sibling->getNextSibling();
@@ -142,10 +148,12 @@ void Tree::Clear() {
 }
 
 void Tree::DeleteElements() {
-    deleteSubTree(root);
-    delete root; 
-    cntNodes--;
-    root = nullptr; 
+    if (root != nullptr) {
+        deleteSubTree(root);
+        delete root; 
+        cntNodes--;
+        root = nullptr;
+    } 
 }
 
 void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
@@ -182,10 +190,12 @@ void Tree::print(std::ostream &os) const {
 
 Tree& Tree::operator = (const Tree &t) {
     cout << "\t\t\t\tAssignment Operator Tree = called!" <<  " with cntNodes = " << cntNodes << endl; 
-    if (this = &t) return *this;
+    if (this == &t) return *this;
     
     // delete the existing tree
-    deleteElements(root);
+    cout << "\t\t\t\tAssignment Operator Tree =   calling DeletElements()" <<endl;
+    DeleteElements();
+    cout << "\t\t\t\tAssignment Operator Tree =   calling traverseRecursiveAndInsert()" <<endl;
     traverseRecursiveAndInsert(*this, *(t.getRoot()), nullptr);
 
     assert(t.cntNodes == this->cntNodes);
