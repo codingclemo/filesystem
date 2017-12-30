@@ -34,3 +34,7 @@ std::ostream & operator << (std::ostream &os, const Node &n) {
     n.print(os);
     return os; 
 }
+
+Node* Node::dumpPointers() const {
+    cout << "node@" << this << " .nextSibling = " << nextSibling << "  .firstChild " << firstChild << endl; 
+}

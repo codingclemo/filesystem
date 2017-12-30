@@ -413,17 +413,26 @@ void testFileSystem() {
     cout << endl; 
 
     fs->rmdir("", "root");
+    fs->ls();
     cout << endl <<endl<< endl <<endl<< endl <<endl; 
 
     fs->rm("root/bin", "b.out");
+    fs->ls();
+    cout << endl;
 
-    // fs->rmdir("", "root/bin");
-    // fs->rm("root", "ReadMe.txt");
-    // fs->rmdir("", "root");
-    // fs->ls();
-    // cout << endl; 
+    fs->rmdir("", "root/bin");
+    fs->ls();
+    cout << endl;
 
-    fs->DeleteElements();
+    fs->rm("root", "ReadMe.txt");
+    fs->ls();
+    cout << endl;
+    
+    fs->rmdir("", "root");
+    fs->ls();
+    cout << endl; 
+
+    // fs->DeleteElements();
     delete fs; 
 }
 

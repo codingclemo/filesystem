@@ -17,6 +17,9 @@ class Node {
         virtual void print(std::ostream &os) const = 0; 
 
         virtual Node* clone() const = 0; 
+        
+        // TODO REMOVE!!!
+        Node* dumpPointers() const; 
 
         friend std::ostream & operator << (std::ostream &os, const Node &n);
 };
