@@ -92,7 +92,7 @@ void testNodeCount() {
 
 }
 
-void testPrintNode() {
+void testPrintTree() {
     Tree *t = new Tree(); 
 
     StringNode *node1 = new StringNode("1");
@@ -148,16 +148,86 @@ void testPrintNode() {
     delete t; 
 }
 
+
+void testDeleteSubTree() {
+
+    // 2 Nodes - delete one node after the other 
+    Tree *t1 = new Tree(); 
+    StringNode *node2 = new StringNode("2");
+    StringNode *node3 = new StringNode("3");
+    
+    t1->insertChild(nullptr, node2);
+    t1->insertChild(node2, node3);
+    
+    cout << "----------- test DeleteSubTree  with 2 Nodes -----------  "<< endl;  
+    cout << "Tree with 2 nodes  : .... "<< endl << *t1 << endl << endl;  
+    t1->deleteSubTree(node2);
+    cout << "Tree after calling deleteSUbTree on node2   : .... "<< endl << *t1 << endl << endl;  
+    // t1->deleteSubTree(node2);
+    // cout << "Tree after calling deleteSUbTree on node2   : .... "<< endl << *t1 << endl << endl<< endl<< endl<< endl;  
+    cout << "bla " << endl; 
+
+    t1->DeleteElements();
+    cout << "Tree after calling deleteElements()  : .... "<< endl << *t1 << endl << endl<< endl<< endl;
+    delete t1;
+
+    // 3 Nodes - delete whole subtree at once 
+    Tree *t2 = new Tree(); 
+    StringNode *node6 = new StringNode("6");
+    StringNode *node7 = new StringNode("7");
+    StringNode *node8 = new StringNode("8");
+    
+    t2->insertChild(nullptr, node6);
+    t2->insertChild(node6, node7);
+    t2->insertChild(node6, node8);
+    
+    cout << "----------- test DeleteSubTree  with 3 Nodes -----------  "<< endl;  
+    cout << "Tree with 3 nodes  : .... "<< endl << *t2 << endl << endl;  
+    t2->deleteSubTree(node6);
+    cout << "Tree after calling deleteSUbTree on root node node6   : .... "<< endl << *t2 << endl << endl<< endl<< endl;
+    
+    t2->DeleteElements();
+    cout << "Tree after calling deleteElements()  : .... "<< endl << *t2 << endl << endl<< endl<< endl;
+
+    delete t2; 
+
+
+    // 6 Nodes - 2 subtrees - delete each subtree seperatly 
+    Tree *t3 = new Tree(); 
+    StringNode *node10 = new StringNode("10");
+    StringNode *node11 = new StringNode("11");
+    StringNode *node12 = new StringNode("12");
+    StringNode *node13 = new StringNode("13");
+    StringNode *node14 = new StringNode("14");
+    StringNode *node15 = new StringNode("15");
+    
+    t3->insertChild(nullptr, node10);
+    t3->insertChild(node10, node11);
+    t3->insertChild(node10, node12);
+    t3->insertChild(node11, node13);
+    t3->insertChild(node11, node14);
+    t3->insertChild(node12, node15);
+    
+    cout << "----------- test DeleteSubTree  with 6 Nodes and 2 sub trees -----------  "<< endl;  
+    cout << "Tree with 6 nodes  : .... "<< endl << *t3 << endl << endl;  
+    t3->deleteSubTree(node11);
+    cout << "Tree after calling deleteSUbTree on node11  : .... "<< endl << *t3 << endl << endl<< endl<< endl;
+    
+    t3->deleteSubTree(node12);
+    cout << "Tree after calling deleteSUbTree on node12  : .... "<< endl << *t3 << endl << endl<< endl<< endl;
+    
+    t3->DeleteElements();
+    cout << "Tree after calling deleteElements()  : .... "<< endl << *t3 << endl << endl<< endl<< endl;
+
+    delete t3; 
+}
+
+
 int main() {
 
     // testNodeCount(); 
-    testPrintNode();
-
-    StringNode *node = new StringNode("123456");
-    cout << endl << *node  << endl; 
-
-
-
+    // testPrintTree();
+    testDeleteSubTree();
 
     return 0;     
 }

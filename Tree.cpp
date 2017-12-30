@@ -5,12 +5,12 @@
 
 using namespace std; 
 
-Tree::Tree() : root(nullptr) {
+Tree::Tree() : cntNodes(0), root(nullptr) {
     cout << "\t\t\t\tConstructor Tree() called" << endl; 
 } 
 
 Tree::~Tree() {
-    cout << "\t\t\t\tDestructor Tree() called" << endl; 
+    cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
 }
 
 Node* Tree::getRoot() const {
@@ -18,6 +18,7 @@ Node* Tree::getRoot() const {
 }  
 
 void Tree::insertChild(Node *parent, Node *child) {
+    cntNodes++;
     if (parent == nullptr) {
         // cout << "'Tree::insertChild'   inserting child as new root" << endl; 
         root = child;
@@ -26,7 +27,7 @@ void Tree::insertChild(Node *parent, Node *child) {
         // cout << "\t\t\t\t'Tree::insertChild'   inserting child as 'firstChild'" << endl; 
         // cout << "parent.value = " << *parent << "   child.value = " << *child << endl;     
         parent->setFirstChild(child);
-    } else  {
+    } else {
         // find last node in list 
         // cout << "\t\t\t\t'Tree::insertChild'   inserting child at end of list of nextSiblings()" << endl; 
         Node* sibling = parent->getFirstChild(); 
@@ -38,11 +39,40 @@ void Tree::insertChild(Node *parent, Node *child) {
         // cout << "adding child to sibling.value = "<< *sibling<< "    child.value = "<< *child << endl; 
         sibling->setNextSibling(child);
     } 
+    cout << "\t\t\t\'insertChild'  called   cntNodes = " << cntNodes << endl; 
 }
 
 void Tree::deleteSubTree(Node *node) {
-    cout << "\t\t\t\tdeleteSubTree NOT implemented - exiting!" << endl; 
-    exit(1); 
+    Node *sibling;
+    Node *child;
+    Node *deleteMe; 
+    child = node->getFirstChild(); 
+    node->setFirstChild(nullptr);
+    // if (node == root) {
+    //     root = nullptr; 
+    // }
+    while (child != nullptr) {
+        sibling = child;
+        deleteMe = child; 
+
+        // save the pointer to the firstChild
+        child = child->getFirstChild();
+        
+        sibling = sibling->getNextSibling();
+        delete deleteMe; 
+        deleteMe = nullptr; 
+        cntNodes--;
+        while (sibling != nullptr) {
+            if (sibling->getFirstChild() != nullptr) {
+                deleteSubTree(sibling->getFirstChild());
+            }
+            deleteMe = sibling; 
+            sibling = sibling->getNextSibling();
+            delete deleteMe; 
+            deleteMe = nullptr; 
+            cntNodes--;
+        }         
+    }
 }
 
 void Tree::getNodeCountRecursive(Node &n, int &cnt) const {
@@ -76,9 +106,11 @@ void Tree::Clear() {
 }
 
 void Tree::DeleteElements() {
-    // delete the whole tree and free the memory
+    deleteSubTree(root);
+    delete root; 
+    cntNodes--;
+    root = nullptr; 
 }
-
 
 void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
     Node *sibling;
@@ -106,6 +138,7 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
 }
 
 void Tree::print(std::ostream &os) const {
+    os << "root = " << root << endl; 
     printRecursive(*root, 1, os);
     // os << "print from tree" << endl; 
     // root->print(os);

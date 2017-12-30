@@ -6,9 +6,10 @@
 
 class Tree {
     private: 
+        int cntNodes; 
+
         void printRecursive(Node &n, int depth, std::ostream &os) const;
         void getNodeCountRecursive(Node &n, int &cnt) const;
-
         
     protected:
         Node *root; 
