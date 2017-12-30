@@ -160,6 +160,7 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
     Node *sibling;
     Node *child; 
     child = &n; 
+    //os << "first: " << *child <<endl;
     while (child != nullptr) {
         // os << "depth: " << depth << std::string(depth * 2, ' ');
         sibling = child;
@@ -182,9 +183,9 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
 }
 
 void Tree::print(std::ostream &os) const {
-    os << "root = " << root << endl; 
-    printRecursive(*root, 1, os);
     // os << "print from tree" << endl; 
+    // os << "root = " << root << endl; 
+    printRecursive(*root, 1, os);
     // root->print(os);
 }
 

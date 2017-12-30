@@ -11,7 +11,7 @@ OFILES = $(CPPFILES:.cpp=.o)
 PROGRAM = main
 ARGUMENTS = 
 
-hugo: clean depend run
+all: depend run
 
 $(PROGRAM): $(OFILES)
 	$(LD) -o $@ $(OFILES)  $(LDFLAGS) 

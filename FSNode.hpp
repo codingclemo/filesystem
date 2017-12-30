@@ -5,7 +5,7 @@
 #include "Node.hpp"
 
 class FSNode : public Node {
-    private:
+    protected:
         std::string name; 
 
     public: 
@@ -14,8 +14,9 @@ class FSNode : public Node {
         
         virtual ~FSNode(); 
 
-        virtual void print(std::ostream &os) const override; 
-        virtual Node* clone() const override; 
+        virtual void print(std::ostream &os) const = 0; 
+        
+        virtual std::string getName() const; 
 
         friend std::ostream & operator << (std::ostream &os, const FSNode &sn);
 };

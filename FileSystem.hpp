@@ -10,9 +10,11 @@ class FileSystem : public Tree {
         std::string name;
         std::string delim = "/"; 
 
-        Node* findNode(const std::string &path) const; 
+        FSNode* findNode(const std::string &path) const; 
 
         void splitString(std::string s, std::vector<std::string>& splitted) const; 
+
+        void showErrorMessage(const std::string &method, const std::string &msg, const std::string &path) const;
 
     public: 
         explicit FileSystem();

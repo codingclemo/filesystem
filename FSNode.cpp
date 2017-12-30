@@ -25,6 +25,10 @@ std::ostream & operator << (std::ostream &os, const FSNode &sn) {
     return os; 
 }
 
-Node* FSNode::clone() const {
-    return new FSNode(*this);
-} 
+// Node* FSNode::clone() const {
+//     return new FSNode(*this);
+// } 
+
+std::string FSNode::getName() const {
+    return "hallo"; 
+}

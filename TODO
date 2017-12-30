@@ -1,1 +1,1 @@
--) replace .print with << operator if it works for nodes!
+-) split in filesystem has problems with a / at the end?

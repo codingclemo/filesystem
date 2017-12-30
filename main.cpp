@@ -440,53 +440,39 @@ int main() {
 
 
     // part 2
-    // testFileDirectory(); 
+    testFileDirectory(); 
     
     // testFileSystem();    
 
     FileSystem *fs = new FileSystem();
+    fs->mkdir("", "root");
+    fs->ls(); 
+    fs->mkdir("root", "blupp");
+    fs->mkdir("root", "blabla");
+    fs->ls(); 
+    // fs->touch("root1/bin1", "b.out");
+    // cout << endl; 
+    
+    // fs->touch("root2", "b.out");
+    // cout << endl; 
+    
+    // fs->touch("roo3t/bin3/hallo3", "b.out");
+    // cout << endl; 
 
-    fs->touch("root/bin", "b.out");
-    cout << endl; 
+    // fs->touch("/root4/bin4", "b.out");
+    // cout << endl; 
     
-    fs->touch("root", "b.out");
-    cout << endl; 
+    // fs->touch("/root5", "b.out");
+    // cout << endl; 
     
-    fs->touch("root/bin/hallo", "b.out");
-    cout << endl; 
+    // fs->touch("/root5/bin5/hallo5", "b.out");
+    // cout << endl; 
 
-    fs->touch("/root/bin", "b.out");
-    cout << endl; 
-    
-    fs->touch("/root", "b.out");
-    cout << endl; 
-    
-    fs->touch("/root/bin/hallo", "b.out");
-    cout << endl; 
+    // fs->touch("/root6/bin6/hallo6/", "b.out");
+    // cout << endl; 
 
     
     delete fs; 
 
     return 0;     
 }
-
-
-// void main () {
-//     Tree *t1 = new Tree(); 
-//     StringNode *node10 = new StringNode("10");
-//     StringNode *node11 = new StringNode("11");
-//     StringNode *node12 = new StringNode("12");
-
-//     t1->insertChild(nullptr, node10);
-//     t1->insertChild(node10, node11);
-//     t1->insertChild(node10, node12);
-
-//     t1->clear();
-
-//     t1->insertChild(node12, node11);
-//     t1->insertChild(node11, node1);
-
-//     t1->DeleteELements();
-
-//     delete t1; 
-// }
