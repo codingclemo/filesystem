@@ -5,7 +5,7 @@
 
 using namespace std; 
 
-Tree::Tree() : cntNodes(0), root(nullptr) {
+Tree::Tree() : root(nullptr), cntNodes(0) {
     cout << "\t\t\t\tConstructor Tree() called" << endl; 
 } 
 

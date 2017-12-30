@@ -6,15 +6,13 @@
 
 class Tree {
     private: 
-        int cntNodes; 
-
         void printRecursive(Node &n, int depth, std::ostream &os) const;
         void getNodeCountRecursive(Node &n, int &cnt) const;
- 
         void traverseRecursiveAndInsert(Tree &newTree, Node &oldTree, Node *parent);
 
     protected:
         Node *root; 
+        int cntNodes; 
 
     public: 
         Tree(); 

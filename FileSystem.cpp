@@ -46,7 +46,7 @@ FSNode* FileSystem::findNode(const string &path) const {
     cout << "\t\t\t\t\tsubdirs.size = " << subdirs.size() << endl; 
     FSNode *currentNode = nullptr, *tmp = nullptr; 
 
-    cout << "\t\t\t\t\troot = " << root << "   *root = " << root << endl; 
+    // cout << "\t\t\t\t\troot = " << root << "   *root = " << root << endl; 
     FSNode *root_as_fsnode = dynamic_cast<FSNode*>(root);
 
     if (root == nullptr) {
@@ -61,30 +61,35 @@ FSNode* FileSystem::findNode(const string &path) const {
         subdirs.erase(subdirs.begin());
 
         string dummy = root_as_fsnode->getName(); 
-        cout << "\t\t\t\t\tdummy = " << dummy << endl; 
+        cout << "\t\t\t\t\tdummy = " << dummy << "   root_as_fsnode->getName()  = " << root_as_fsnode->getName() << "  currentDir = "  << currentDir  << endl; 
+        // cout << "\t\t\t\t\t root_as_fsnode->getName().length()  = " << root_as_fsnode->getName().length() << "  currentDir.length = "  << currentDir.length()  << endl; 
         if (root_as_fsnode->getName() != currentDir) {
             showErrorMessage("?", "path not found in filesystem!", fullDir);
         }
 
-        cout << "\t\t\t\t\tsubdir = " << currentDir << endl; 
+        cout << "\t\t\t\t\tcurrentDir = " << currentDir << endl; 
+        
+        cout << endl << endl;
         while (!subdirs.empty()) {
             currentDir = subdirs[0];
             fullDir += "/" + currentDir;
-            // cout << "\t\t\t\t\tsubdir = " << currentDir << endl; 
+            cout << "\t\t\t\t\tsubdir = " << currentDir << endl; 
             subdirs.erase(subdirs.begin());
 
             // look up the currentNode 
             tmp = dynamic_cast<FSNode*>(currentNode->getFirstChild());
+            cout << "\t\t\t\t\ttmp->getName()  =  "<< tmp->getName() << "  currentDir = " << currentDir << endl; 
             if (tmp->getName() == currentDir) {
                 currentNode = tmp; 
             } else {
                 // is the subDir one of the siblings?
-                tmp = dynamic_cast<FSNode*>(currentNode->getNextSibling()); 
+                tmp = dynamic_cast<FSNode*>(tmp->getNextSibling()); 
                 while ((tmp != nullptr) && (tmp->getName() != currentDir)) {
+                    cout << "\t\t\t\t\t\tWHILE   tmp->getName()  =  "<< tmp->getName() << "  currentDir = " << currentDir << endl; 
                     tmp = dynamic_cast<FSNode*>(tmp->getNextSibling());
                 }
                 if (tmp == nullptr) {
-                    showErrorMessage("?", "path not found in filesystem!", fullDir);
+                    showErrorMessage("?2", "path not found in filesystem!", fullDir);
                 }
                 currentNode = tmp; 
             }
@@ -97,19 +102,62 @@ FSNode* FileSystem::findNode(const string &path) const {
 }
 
 void FileSystem::showErrorMessage(const string &method, const string &msg, const string &path) const {
-    cout << "ERROR in '" << method << "'   -  " << msg << "; path: " << path << endl<< endl;
-    cout << "ABORTING!" << endl; 
-    exit(-1); 
+    cout << "**************************************************" <<endl;
+    cout << "ERROR in '" << method << "'   -  " << msg << "; path: " << path << endl;
+    cout << "**************************************************" <<endl;
+}
+
+bool FileSystem::removeNode(FSNode *n, const std::string &name) {
+    FSNode *prev; 
+    prev = n; 
+
+    while ((n != nullptr) && (n->getName() != name)) {
+        prev = n;
+        n = dynamic_cast<FSNode*> (n->getNextSibling());
+    }
+
+    if (n == nullptr) {
+        cout << "removeNode - node not found" <<endl; 
+        return false;
+    } 
+    // delete the node
+
+    prev->setNextSibling(n->getNextSibling());
+    delete n;
+    cntNodes--; 
+    return true; 
+}
+
+void FileSystem::splitDirname(const std::string &path, std::string &parentDir, std::string &dirname) const {
+    cout << "'splitDir("<<path << ")"  << endl;
+    vector <string> subdirs; 
+    splitString(path, subdirs);
+
+    parentDir = ""; 
+    dirname = path; 
+
+    if (subdirs.size() == 1) {
+        return; 
+    }
+    while (subdirs.size() > 1) {
+        parentDir += "/" + subdirs[0];
+        subdirs.erase(subdirs.begin());
+    }
+    dirname = subdirs[0];
+    cout << "'splitDir("<<path << ") returns  parentDir = " << parentDir  << "   dirname = " << dirname <<  endl;
 }
 
 void FileSystem::touch(const string &path, const string &filename) {
-    Node *n; 
-
-    n = findNode(path);
-    if (n == nullptr) {
-        showErrorMessage("touch", "FileSystem is empty!", path);
+    if (path == "") {
+        showErrorMessage("mkdir", "Can't insert file in  non-existing base-dir  ''   !", path);
     } else {
-        cout << "touch node found for path = " << path << " has contents n = " << *n << endl; 
+        FSNode *n = findNode(path);
+        if (n == nullptr) {
+            showErrorMessage("touch", "Path not found!", path);
+        } else {
+            cout << "'touch'  node found for path = " << path << " has contents n = " << *n << endl; 
+            insertChild(n, new File(filename));
+        }
     }
 }
 
@@ -118,7 +166,6 @@ void FileSystem::mkdir(const string &path, const string &dirname) {
          cout << "\t\t\t\t\tmkdir   dirname = "  <<dirname << endl; 
         insertChild(root, new Directory(dirname));
      } else {
-         cout << "\t\t\t\t\tNOT IMPLEMENTED" << endl; 
          FSNode *n = findNode(path);
          if (n == nullptr) {
             showErrorMessage("mkdir", "Path not found!", path);
@@ -130,11 +177,40 @@ void FileSystem::mkdir(const string &path, const string &dirname) {
 }
 
 void FileSystem::rm(const string &path, const string &filename) {
-
+    FSNode *n = findNode(path);
+    if (n == nullptr) {
+        showErrorMessage("rm", "Path not found!", path);
+    } else {
+        cout << "'rm'  node found for path = " << path << " has contents n = " << *n << endl; 
+        if (!removeNode(dynamic_cast<FSNode*> (n->getFirstChild()), filename)) {
+            showErrorMessage("rm", "File not found!", path + "/" + filename);
+        }
+    }
 }
 
 void FileSystem::rmdir(const string &path, const string &dirname) {
+    assert(path == "");
+    string parentDir, name;
+    splitDirname(dirname, parentDir, name);
+    cout << endl << endl; 
+    FSNode *parent = findNode(parentDir);
+    FSNode *n = findNode(dirname);
+    cout << "\t\t\t\t\tparent = " << parent << "   *parent =" << *parent << endl;
+    cout << "\t\t\t\t\tn = " << n << "   *n =" << *n << endl; 
 
+    if (n == nullptr) {
+        showErrorMessage("rmdir", "Path not found!", dirname);
+    } else {
+        cout << "'rmdir'  node found for dirname = " << dirname << " has contents n = " << *n << endl; 
+
+        if ((n->getFirstChild() != nullptr)) {
+            showErrorMessage("rmdir", "Can't 'rmdir' directory, because it is not empty!", dirname);
+        }
+        cout << "\t\t\t\t\t\trmdir  - removing node" <<endl;
+        if (!removeNode(dynamic_cast<FSNode*> (parent->getFirstChild()), name)) {
+            showErrorMessage("rmdir", "Directory not found!", dirname);
+        }
+    }
 }
 
 void FileSystem::ls() const {

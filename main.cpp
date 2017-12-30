@@ -442,7 +442,7 @@ int main() {
     // part 2
     testFileDirectory(); 
     
-    // testFileSystem();    
+    //  
 
     FileSystem *fs = new FileSystem();
     fs->mkdir("", "root");
@@ -453,12 +453,22 @@ int main() {
     fs->mkdir("root", "var");
     fs->ls(); 
 
-    // fs->touch("root/bin", "a.out");
+    fs->touch("root/bin", "a.out");
+    fs->touch("root/bin", "b.out");
+    fs->touch("root/bin", "c.out");
+    fs->ls();
+    cout << endl; 
     
-    // cout << endl; 
-    
-    // fs->touch("root2", "b.out");
-    // cout << endl; 
+    fs->rm("root/bin", "b.out");
+    fs->ls();
+    cout << endl; 
+
+
+    cout << endl <<endl<< endl << endl; 
+     
+    fs->rmdir("", "/root/usr");
+    fs->ls();
+    cout << endl; 
     
     // fs->touch("roo3t/bin3/hallo3", "b.out");
     // cout << endl; 
@@ -478,5 +488,8 @@ int main() {
     fs->DeleteElements();
     delete fs; 
 
+    cout << endl << endl << endl << endl << endl << endl;
+    testFileSystem();   
+    
     return 0;     
 }
