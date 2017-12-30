@@ -1,2 +1,0 @@
--) split in filesystem has problems with a / at the end?
--) check if dir or file already exists if touch/mkdir is called!
