@@ -164,21 +164,21 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
     while (child != nullptr) {
         // os << "depth: " << depth << std::string(depth * 2, ' ');
         sibling = child;
-        os << std::string(depth * 2, ' ') << *sibling;
+        os << std::string(depth * 2, ' ') << *sibling <<endl;
         // sibling->print(os);
         sibling = sibling->getNextSibling();
         while (sibling != nullptr) {
-            os << "  " << *sibling;
+            os << std::string((depth+1) * 2, ' ') << *sibling << endl;
             // sibling->print(os);
             if (sibling->getFirstChild() != nullptr) {
                 os << endl; 
-                printRecursive(*(sibling->getFirstChild()), depth, os);
+                printRecursive(*(sibling->getFirstChild()), depth+2, os);
             }
             sibling = sibling->getNextSibling();
         }
         os << endl; 
         child = child->getFirstChild(); 
-        depth += 2; 
+        depth += 0; 
     }
 }
 

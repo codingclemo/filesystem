@@ -51,6 +51,7 @@ FSNode* FileSystem::findNode(const string &path) const {
 
     if (root == nullptr) {
         showErrorMessage("?", "FileSystem is empty - can't find path", fullDir);
+        return nullptr; 
     }
 
     if (subdirs.size() > 0) {
@@ -65,6 +66,7 @@ FSNode* FileSystem::findNode(const string &path) const {
         // cout << "\t\t\t\t\t root_as_fsnode->getName().length()  = " << root_as_fsnode->getName().length() << "  currentDir.length = "  << currentDir.length()  << endl; 
         if (root_as_fsnode->getName() != currentDir) {
             showErrorMessage("?", "path not found in filesystem!", fullDir);
+            return nullptr;
         }
 
         cout << "\t\t\t\t\tcurrentDir = " << currentDir << endl; 
@@ -90,6 +92,7 @@ FSNode* FileSystem::findNode(const string &path) const {
                 }
                 if (tmp == nullptr) {
                     showErrorMessage("?2", "path not found in filesystem!", fullDir);
+                    return nullptr;
                 }
                 currentNode = tmp; 
             }
@@ -163,7 +166,7 @@ bool FileSystem::removeNode(FSNode *parent, const std::string &name) {
 }
 
 void FileSystem::splitDirname(const std::string &path, std::string &parentDir, std::string &dirname) const {
-    cout << "'splitDir("<<path << ")"  << endl;
+    cout << "\t\t\t\t\t'splitDir("<<path << ")"  << endl;
     vector <string> subdirs; 
     splitString(path, subdirs);
 
@@ -178,7 +181,7 @@ void FileSystem::splitDirname(const std::string &path, std::string &parentDir, s
         subdirs.erase(subdirs.begin());
     }
     dirname = subdirs[0];
-    cout << "'splitDir("<<path << ") returns  parentDir = " << parentDir  << "   dirname = " << dirname <<  endl;
+    cout << "'\t\t\t\t\tsplitDir("<<path << ") returns:  parentDir = " << parentDir  << ", dirname = " << dirname <<  endl;
 }
 
 void FileSystem::touch(const string &path, const string &filename) {
@@ -225,20 +228,21 @@ void FileSystem::rm(const string &path, const string &filename) {
 
 void FileSystem::rmdir(const string &path, const string &dirname) {
     assert(path == "");
+
     string parentDir, name;
     splitDirname(dirname, parentDir, name);
     cout << endl << endl; 
     FSNode *parent = findNode(parentDir);
+    cout << "3333" << endl; 
     FSNode *n = findNode(dirname);
+    cout << "55555" << endl; 
 
-    cout << "\t\t\t\t\tparentDir = " << parentDir << "   name =" << name << endl; 
-
-    cout << "\t\t\t\t\tparent = " << parent << "   *parent =" << *parent << endl;
-    cout << "\t\t\t\t\tn = " << n << "   *n =" << *n << endl; 
-
-    if (n == nullptr) {
+    if ((n == nullptr)) {
         showErrorMessage("rmdir", "Path not found!", dirname);
     } else {
+        // cout << "\t\t\t\t\tparentDir = " << parentDir << "   name =" << name << endl; 
+        // cout << "\t\t\t\t\tparent = " << parent << "   *parent =" << *parent << endl;
+        // cout << "\t\t\t\t\tn = " << n << "   *n =" << *n << endl; 
         if (parentDir == "") {
             if (root->getFirstChild() != nullptr) {
                 showErrorMessage("rmdir", "Can't 'rmdir' directory, because it is not empty!", dirname);
@@ -259,8 +263,6 @@ void FileSystem::rmdir(const string &path, const string &dirname) {
                 }
             }
         }
-        
-        
     }
 }
 
