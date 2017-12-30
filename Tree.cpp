@@ -52,7 +52,7 @@ Tree::Tree(const Tree &t) : root(nullptr), cntNodes(0) {
 }
 
 Tree::~Tree() {
-    cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " are still in the tree!" << endl; 
+    cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " nodes left in the tree!" << endl; 
 }
 
 Node* Tree::getRoot() const {
@@ -161,7 +161,7 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
     sibling = &n; 
 
     if (sibling != nullptr) {
-        os << std::string(depth * 2, ' ') << *sibling <<endl;
+        os << std::string(depth * 4, ' ') << *sibling <<endl;
         if (sibling->getFirstChild() != nullptr) {
             printRecursive(*(sibling->getFirstChild()), depth+1, os);
             // printRecursive(*(sibling->getNextSibling()), depth+1, os);
@@ -169,7 +169,7 @@ void Tree::printRecursive(Node &n, int depth, std::ostream &os) const {
         while (sibling != nullptr) {
             sibling = sibling->getNextSibling();
             if (sibling != nullptr) {
-                os << std::string(depth * 2, ' ') << *sibling <<endl;
+                os << std::string(depth * 4, ' ') << *sibling <<endl;
                 if (sibling->getFirstChild() != nullptr) {
                     printRecursive(*(sibling->getFirstChild()), depth+1, os);                   
                 } 
@@ -186,7 +186,7 @@ void Tree::print(std::ostream &os) const {
 }
 
 Tree& Tree::operator = (const Tree &t) {
-    cout << "\t\t\t\tAssignment Operator Tree = called!" <<  " with tree with cntNodes = " << cntNodes << endl; 
+    // cout << "\t\t\t\tAssignment Operator Tree = called!" <<  " with tree with cntNodes = " << cntNodes << endl; 
     if (this == &t) return *this;
     
     // delete the existing tree
@@ -202,6 +202,8 @@ Tree& Tree::operator = (const Tree &t) {
 std::ostream & operator << (std::ostream &os, const Tree &t) {
     // t.print(os);
     // os << "<< operator for tree called " << endl << flush; 
+    os << "------------------------------------------------------" << endl; 
     t.print(os);
+    os << "------------------------------------------------------" << endl; 
     return os; 
 }

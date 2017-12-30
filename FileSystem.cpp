@@ -9,11 +9,11 @@
 using namespace std; 
 
 FileSystem::FileSystem() : Tree() {
-    cout << "\t\t\t\tConstructor FileSystem() called." << " address of this = " << this << endl; 
+    // cout << "\t\t\t\tConstructor FileSystem() called." << " address of this = " << this << endl; 
 }
 
 FileSystem::~FileSystem() {
-    cout << "\t\t\t\tDestructor ~FileSystem() called."  << " address of this = " << this << endl; 
+    // cout << "\t\t\t\tDestructor ~FileSystem() called."  << " address of this = " << this << endl; 
 }
 
 void FileSystem::splitString(string s, std::vector<string>& splitted) const {
@@ -91,7 +91,7 @@ FSNode* FileSystem::findNode(const string &path) const {
                     tmp = dynamic_cast<FSNode*>(tmp->getNextSibling());
                 }
                 if (tmp == nullptr) {
-                    showErrorMessage("?2", "path not found in filesystem!", fullDir);
+                    // showErrorMessage("?2", "path not found in filesystem!", fullDir);
                     return nullptr;
                 }
                 currentNode = tmp; 
@@ -265,8 +265,6 @@ void FileSystem::rmdir(const string &path, const string &dirname) {
 
 void FileSystem::ls() const {
     cout << "FileSystem::ls() " << endl; 
-    cout << "------------------------" << endl; 
     cout << *this << endl;
-    cout << "------------------------" << endl; 
     // cout << endl << "root = " << *root << endl;
 }
