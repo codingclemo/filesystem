@@ -13,7 +13,7 @@ File::~File() {
 }
 
 void File::print(std::ostream &os) const {
-    os << name;
+    os << name; // sollte hier nicht contents ausgegeben werden?
 }
 
 std::ostream & operator << (std::ostream &os, const File &f) {
