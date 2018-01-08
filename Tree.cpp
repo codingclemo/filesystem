@@ -52,6 +52,7 @@ Tree::Tree(const Tree &t) : root(nullptr), cntNodes(0) {
 }
 
 Tree::~Tree() {
+    DeleteElements();
     cout << "\t\t\t\tDestructor Tree() called and " << cntNodes << " nodes left in the tree!" << endl; 
     assert(cntNodes == 0);
 }
